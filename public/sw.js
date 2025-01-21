@@ -1,4 +1,4 @@
-importScripts('firebase-messaging-sw.js')
+importScripts('https://uladzislaupapliouka.github.io/web-push-redirect-ui/firebase-messaging-sw.js')
 
 async function getClientList() {
     return self.clients.claim().then(() =>

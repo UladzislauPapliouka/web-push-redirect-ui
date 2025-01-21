@@ -15,7 +15,7 @@ function App() {
     localStorage.setItem('providerUid', 'PH5HQGI1OEZDZk44L24mUi5AOkVZX0NHJ1hNfj4=');
     localStorage.setItem('isWorkerManualRegistration', 'true');
     localStorage.setItem('firebaseWorkerPath', 'web-push-redirect-ui/sw.js');
-    localStorage.setItem('customWorkerScope', 'web-push-redirect-ui/');
+    localStorage.setItem('customWorkerScope', '/web-push-redirect-ui/');
     useEffect(() => {
         if("serviceWorker" in navigator){
         // @ts-ignore
@@ -45,7 +45,7 @@ function App() {
         const newRegistration = new Workbox(
             "sw.js",
             {
-                scope:'/web-push-redirect-ui'
+                scope:'/web-push-redirect-ui/'
             }
         )
 

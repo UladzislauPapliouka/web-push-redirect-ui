@@ -8,95 +8,95 @@ import {SystemMessage} from "@alfalab/core-components/system-message";
 import {SuperEllipse} from "@alfalab/core-components/icon-view/components";
 import { IoIosAlert } from "react-icons/io";
 import {Workbox} from "workbox-window";
-
-if("serviceWorker" in navigator){
-  // @ts-ignore
-  if(!window.navigator.standalone){
-    console.log("Website opened not in PWA")
-    window.addEventListener("beforeinstallprompt",()=>{
-      console.log("anything")
-      // const elem = document.createElement('button')
-      // elem.addEventListener('click',async ()=>{
-      //   const promptEvent = window.deferredPrompt;
-      //   if (!promptEvent) {
-      //     // The deferred prompt isn't available.
-      //     console.log("unable to prompt prompt")
-      //     return;
-      //   }
-      //   // Show the install prompt.
-      //   promptEvent.prompt();
-      //   // Log the result
-      //   const result = await promptEvent.userChoice;
-      //   console.log('👍', 'userChoice', result);
-      // })
-      // elem.innerText='install'
-      // document!.getElementById('root')!.append(elem)
-
-    })
-  }
-  const newRegistration = new Workbox(
-      "sw.js",
-      {
-        scope:'/'
-      }
-  )
-  localStorage.setItem('appPackage', 'web-test.alfabank.ru');
-  localStorage.setItem('providerUid', 'PH5HQGI1OEZDZk44L24mUi5AOkVZX0NHJ1hNfj4=');
-  localStorage.setItem('isWorkerManualRegistration', 'true');
-  newRegistration.register().then(()=>{
-    // @ts-ignore
-    window.ednaWidget.publicMethods.showAskingPopup =()=>{
-      console.log('showAskingPopup');
-      // @ts-ignore
-      document.getElementById('enable-push')?.addEventListener('click',()=>{
-        window.Notification.requestPermission().then((permission) => {
-          if (permission !== 'granted') {
-            // @ts-ignore
-            window.ednaWidget.publicMethods.showPermissionDeniedPopup();
-            // BrowserLog.sendInfo("Notification permission isn't grated");
-            // dispatchEdnaWidgetError();
-          } else {
-            // @ts-ignore
-            window.ednaWidget.publicMethods.initFirebaseApp(
-                {
-                  apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
-                  authDomain:  'api-project-425647879232.firebaseapp.com',
-                  projectId:  'api-project-425647879232',
-                  storageBucket:  'api-project-425647879232.appspot.com',
-                  messagingSenderId:  '425647879232',
-                  appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
-                },
-                'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
-            );
-          }
-        });
-
-      })
-    }
-    // @ts-ignore
-    window.ednaWidget.publicMethods.checkPermitAndAsk()
-    // @ts-ignore
-    const deviceUid = window.ednaWidget.publicMethods.getDeviceUid();
-    // @ts-ignore
-    window.ednaWidget.Emitter.subscribe(
-        'onDeviceAddressChanged',
-        // @ts-ignore
-        ({ deviceAddress }) => {
-          console.log('DATA',deviceAddress,deviceUid);
-        },
-    );
-    // @ts-ignore
-    window.ednaWidget.Emitter.subscribe('onError', (error) => {
-      console.log('WEB-PUSH ERROR',error);
-    });
-
-
-  }).catch(error => {console.log("SW ERROE",error)})
-} else  {
-  console.log("Service worker is not supported");
-}
+import {useEffect} from "react";
 
 function App() {
+    useEffect(() => {if("serviceWorker" in navigator){
+        // @ts-ignore
+        if(!window.navigator.standalone){
+            console.log("Website opened not in PWA")
+            window.addEventListener("beforeinstallprompt",()=>{
+                console.log("anything")
+                // const elem = document.createElement('button')
+                // elem.addEventListener('click',async ()=>{
+                //   const promptEvent = window.deferredPrompt;
+                //   if (!promptEvent) {
+                //     // The deferred prompt isn't available.
+                //     console.log("unable to prompt prompt")
+                //     return;
+                //   }
+                //   // Show the install prompt.
+                //   promptEvent.prompt();
+                //   // Log the result
+                //   const result = await promptEvent.userChoice;
+                //   console.log('👍', 'userChoice', result);
+                // })
+                // elem.innerText='install'
+                // document!.getElementById('root')!.append(elem)
+
+            })
+        }
+        const newRegistration = new Workbox(
+            "sw.js",
+            {
+                scope:'/'
+            }
+        )
+        localStorage.setItem('appPackage', 'web-test.alfabank.ru');
+        localStorage.setItem('providerUid', 'PH5HQGI1OEZDZk44L24mUi5AOkVZX0NHJ1hNfj4=');
+        localStorage.setItem('isWorkerManualRegistration', 'true');
+        newRegistration.register().then(()=>{
+            // @ts-ignore
+            window.ednaWidget.publicMethods.showAskingPopup =()=>{
+                console.log('showAskingPopup');
+                // @ts-ignore
+                document.getElementById('enable-push')?.addEventListener('click',()=>{
+                    window.Notification.requestPermission().then((permission) => {
+                        if (permission !== 'granted') {
+                            // @ts-ignore
+                            window.ednaWidget.publicMethods.showPermissionDeniedPopup();
+                            // BrowserLog.sendInfo("Notification permission isn't grated");
+                            // dispatchEdnaWidgetError();
+                        } else {
+                            // @ts-ignore
+                            window.ednaWidget.publicMethods.initFirebaseApp(
+                                {
+                                    apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
+                                    authDomain:  'api-project-425647879232.firebaseapp.com',
+                                    projectId:  'api-project-425647879232',
+                                    storageBucket:  'api-project-425647879232.appspot.com',
+                                    messagingSenderId:  '425647879232',
+                                    appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
+                                },
+                                'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
+                            );
+                        }
+                    });
+
+                })
+            }
+            // @ts-ignore
+            window.ednaWidget.publicMethods.checkPermitAndAsk()
+            // @ts-ignore
+            const deviceUid = window.ednaWidget.publicMethods.getDeviceUid();
+            // @ts-ignore
+            window.ednaWidget.Emitter.subscribe(
+                'onDeviceAddressChanged',
+                // @ts-ignore
+                ({ deviceAddress }) => {
+                    console.log('DATA',deviceAddress,deviceUid);
+                },
+            );
+            // @ts-ignore
+            window.ednaWidget.Emitter.subscribe('onError', (error) => {
+                console.log('WEB-PUSH ERROR',error);
+            });
+
+
+        }).catch(error => {console.log("SW ERROE",error)})
+    } else  {
+        console.log("Service worker is not supported");
+    }},[])
   if (!window.navigator.userAgent.match(/iPhone/i)) {
       return <div style={{
           display:"flex",

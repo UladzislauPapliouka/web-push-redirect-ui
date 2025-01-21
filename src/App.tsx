@@ -11,7 +11,10 @@ import {Workbox} from "workbox-window";
 import {useEffect} from "react";
 
 function App() {
-    useEffect(() => {if("serviceWorker" in navigator){
+    useEffect(() => {
+        console.log('useEffect')
+        console.log(navigator);
+        if("serviceWorker" in navigator){
         // @ts-ignore
         if(!window.navigator.standalone){
             console.log("Website opened not in PWA")

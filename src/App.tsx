@@ -48,6 +48,7 @@ function App() {
         localStorage.setItem('appPackage', 'web-test.alfabank.ru');
         localStorage.setItem('providerUid', 'PH5HQGI1OEZDZk44L24mUi5AOkVZX0NHJ1hNfj4=');
         localStorage.setItem('isWorkerManualRegistration', 'true');
+        localStorage.setItem('firebaseWorkerPath', 'web-push-redirect-ui//sw.js');
         newRegistration.register().then(()=>{
             // @ts-ignore
             window.ednaWidget.publicMethods.showAskingPopup =()=>{

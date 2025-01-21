@@ -42,7 +42,7 @@ function App() {
         const newRegistration = new Workbox(
             "sw.js",
             {
-                scope:'/'
+                scope:'/web-push-redirect-ui/'
             }
         )
         localStorage.setItem('appPackage', 'web-test.alfabank.ru');

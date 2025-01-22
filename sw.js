@@ -35,6 +35,9 @@ self.addEventListener('notificationclick', async function(event) {
     });
 
     // Now wait for the promise to keep the permission alive.
+    event.waitUntil(()=>{
+        client.focus()
+    })
     event.waitUntil(promise);
     // client.location.fre
     // waitUntil(()=>{

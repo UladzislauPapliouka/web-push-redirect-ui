@@ -43,7 +43,7 @@ function App() {
             })
         }
         const newRegistration = new Workbox(
-            "sw.js",
+            "/web-push-redirect-ui/sw.js",
             {
                 scope:'/web-push-redirect-ui/'
             }
@@ -51,52 +51,25 @@ function App() {
 
         newRegistration.register().then(()=>{
             // @ts-ignore
-            window.ednaWidget.publicMethods.showAskingPopup =()=>{
+            window.ednaWidget.publicMethods.showAskingPopup =()=> {
                 console.log('showAskingPopup');
                 // @ts-ignore
-                document.getElementById('enable-push')?.addEventListener('click',()=>{
-                    window.Notification.requestPermission().then((permission) => {
-                        if (permission !== 'granted') {
-                            // @ts-ignore
-                            window.ednaWidget.publicMethods.showPermissionDeniedPopup();
-                            // BrowserLog.sendInfo("Notification permission isn't grated");
-                            // dispatchEdnaWidgetError();
-                        } else {
-                            // @ts-ignore
-                            window.ednaWidget.publicMethods.initFirebaseApp(
-                                {
-                                    apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
-                                    authDomain:  'api-project-425647879232.firebaseapp.com',
-                                    projectId:  'api-project-425647879232',
-                                    storageBucket:  'api-project-425647879232.appspot.com',
-                                    messagingSenderId:  '425647879232',
-                                    appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
-                                },
-                                'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
-                            );
-                        }
-                    });
-
-                })
+                // @ts-ignore
             }
-            // @ts-ignore
-            window.ednaWidget.publicMethods.checkPermitAndAsk()
             // @ts-ignore
             const deviceUid = window.ednaWidget.publicMethods.getDeviceUid();
             // @ts-ignore
             window.ednaWidget.Emitter.subscribe(
                 'onDeviceAddressChanged',
                 // @ts-ignore
-                ({ deviceAddress }) => {
-                    console.log('DATA',deviceAddress,deviceUid);
+                ({deviceAddress}) => {
+                    console.log('DATA', deviceAddress, deviceUid);
                 },
             );
             // @ts-ignore
             window.ednaWidget.Emitter.subscribe('onError', (error) => {
-                console.log('WEB-PUSH ERROR',error);
+                console.log('WEB-PUSH ERROR', error);
             });
-
-
         }).catch(error => {console.log("SW ERROE",error)})
     } else  {
         console.log("Service worker is not supported");
@@ -166,7 +139,31 @@ function App() {
             <List.Item>Нажать на кнопку перейти в Альфа-Мобайл</List.Item>
           </List>
         </div>
-        <Button id={'enable-push'} block view={'primary'}>Включить уведомления</Button>
+        <Button onClick={()=>{
+                window.Notification.requestPermission().then((permission) => {
+                    if (permission !== 'granted') {
+                        // @ts-ignore
+                        window.ednaWidget.publicMethods.showPermissionDeniedPopup();
+                        // BrowserLog.sendInfo("Notification permission isn't grated");
+                        // dispatchEdnaWidgetError();
+                    } else {
+                        // @ts-ignore
+                        window.ednaWidget.publicMethods.initFirebaseApp(
+                            {
+                                apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
+                                authDomain:  'api-project-425647879232.firebaseapp.com',
+                                projectId:  'api-project-425647879232',
+                                storageBucket:  'api-project-425647879232.appspot.com',
+                                messagingSenderId:  '425647879232',
+                                appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
+                            },
+                            'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
+                        );
+                    }
+                })
+            // @ts-ignore
+            window.ednaWidget.publicMethods.checkPermitAndAsk();
+        }} id={'enable-push'} block view={'primary'}>Включить уведомления</Button>
       </div>
   );
 }

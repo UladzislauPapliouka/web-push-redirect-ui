@@ -4,9 +4,9 @@ import {List} from "@alfalab/core-components/list";
 import { IoShareOutline } from "react-icons/io5";
 import { CgAddR } from "react-icons/cg";
 import {Button} from "@alfalab/core-components/button";
-import {SystemMessage} from "@alfalab/core-components/system-message";
-import {SuperEllipse} from "@alfalab/core-components/icon-view/components";
-import { IoIosAlert } from "react-icons/io";
+// import {SystemMessage} from "@alfalab/core-components/system-message";
+// import {SuperEllipse} from "@alfalab/core-components/icon-view/components";
+// import { IoIosAlert } from "react-icons/io";
 import {Workbox} from "workbox-window";
 import {useEffect} from "react";
 

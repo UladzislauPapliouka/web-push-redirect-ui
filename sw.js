@@ -25,7 +25,7 @@ self.addEventListener('notificationclick', async function(event) {
     console.log('Notification clicked: ', event.notification.data.deeplink);
     console.log('Window',this)
     console.log("Clients", client)
-    client.openWindow(event.notification.data.deeplink)
+    self.clients.openWindow(event.notification.data.deeplink)
     // client.location.fre
     // waitUntil(()=>{
     //     client.navigate(event.notification.data.deeplink)

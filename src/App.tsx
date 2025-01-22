@@ -123,7 +123,7 @@ function App() {
   // }
   // @ts-ignore
   const isPWA = window.navigator.standalone
-  if (!isPWA) {
+  if (!isPWA || !window.matchMedia('(display-mode: standalone)').matches) {
       return <div
           style={{
               boxSizing: 'border-box',

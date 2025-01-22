@@ -101,26 +101,26 @@ function App() {
     } else  {
         console.log("Service worker is not supported");
     }},[])
-  if (!window.navigator.userAgent.match(/iPhone/i)) {
-      return <div style={{
-          display:"flex",
-          alignItems:"center",
-          justifyContent:"center",
-          height:'100dvh'
-      }}>
-          <SystemMessage>
-              <SystemMessage.Graphic>
-                  <SuperEllipse size={80} backgroundColor='var(--color-light-neutral-translucent-100)'>
-                      <IoIosAlert color='var(--color-light-neutral-translucent-1300)' />
-                  </SuperEllipse>
-              </SystemMessage.Graphic>
-              <SystemMessage.Title>Недоступно на данном устройстве</SystemMessage.Title>
-              <SystemMessage.Subtitle>
-                  Приноси извинения. Данное приложение доступно только на iOS.
-              </SystemMessage.Subtitle>
-          </SystemMessage>
-      </div>
-  }
+  // if (!window.navigator.userAgent.match(/iPhone/i)) {
+  //     return <div style={{
+  //         display:"flex",
+  //         alignItems:"center",
+  //         justifyContent:"center",
+  //         height:'100dvh'
+  //     }}>
+  //         <SystemMessage>
+  //             <SystemMessage.Graphic>
+  //                 <SuperEllipse size={80} backgroundColor='var(--color-light-neutral-translucent-100)'>
+  //                     <IoIosAlert color='var(--color-light-neutral-translucent-1300)' />
+  //                 </SuperEllipse>
+  //             </SystemMessage.Graphic>
+  //             <SystemMessage.Title>Недоступно на данном устройстве</SystemMessage.Title>
+  //             <SystemMessage.Subtitle>
+  //                 Приноси извинения. Данное приложение доступно только на iOS.
+  //             </SystemMessage.Subtitle>
+  //         </SystemMessage>
+  //     </div>
+  // }
   // @ts-ignore
   const isPWA = window.navigator.standalone
   if (!isPWA) {

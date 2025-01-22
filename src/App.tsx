@@ -140,29 +140,30 @@ function App() {
           </List>
         </div>
         <Button onClick={()=>{
-                window.Notification.requestPermission().then((permission) => {
-                    if (permission !== 'granted') {
-                        // @ts-ignore
-                        window.ednaWidget.publicMethods.showPermissionDeniedPopup();
-                        // BrowserLog.sendInfo("Notification permission isn't grated");
-                        // dispatchEdnaWidgetError();
-                    } else {
-                        // @ts-ignore
-                        window.ednaWidget.publicMethods.initFirebaseApp(
-                            {
-                                apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
-                                authDomain:  'api-project-425647879232.firebaseapp.com',
-                                projectId:  'api-project-425647879232',
-                                storageBucket:  'api-project-425647879232.appspot.com',
-                                messagingSenderId:  '425647879232',
-                                appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
-                            },
-                            'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
-                        );
-                    }
-                })
-            // @ts-ignore
-            window.ednaWidget.publicMethods.checkPermitAndAsk();
+            window.Notification.requestPermission().then( (permission) => {
+                if (permission !== 'granted') {
+                    // @ts-ignore
+                    window.ednaWidget.publicMethods.showPermissionDeniedPopup();
+                    // BrowserLog.sendInfo("Notification permission isn't grated");
+                    // dispatchEdnaWidgetError();
+                } else {
+                    // @ts-ignore
+                    window.ednaWidget.publicMethods.initFirebaseApp(
+                        {
+                            apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI' ,
+                            authDomain:  'api-project-425647879232.firebaseapp.com',
+                            projectId:  'api-project-425647879232',
+                            storageBucket:  'api-project-425647879232.appspot.com',
+                            messagingSenderId:  '425647879232',
+                            appId:  '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
+                        },
+                        'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
+                    );
+                }
+                // @ts-ignore
+            }).then(()=>window.ednaWidget.publicMethods.checkPermitAndAsk();)
+
+
         }} id={'enable-push'} block view={'primary'}>Включить уведомления</Button>
       </div>
   );

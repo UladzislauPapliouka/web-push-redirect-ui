@@ -18,7 +18,9 @@ self.addEventListener('push', function(event) {
 self.notificationclick =null
 
 self.addEventListener('notificationclick', async function(event) {
-    // event.preventDefault();
+    event.preventDefault();
+    console.log(self)
+    console.log(event)
    const [client] = await getClientList()
     console.log('Notification clicked: ', event.notification.data.deeplink);
     console.log('Window',this)

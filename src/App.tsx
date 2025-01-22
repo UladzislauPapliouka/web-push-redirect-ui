@@ -161,7 +161,7 @@ function App() {
                     );
                 }
                 // @ts-ignore
-            }).then(()=>window.ednaWidget.publicMethods.checkPermitAndAsk();)
+            }).then(()=>window.ednaWidget.publicMethods.checkPermitAndAsk())
 
 
         }} id={'enable-push'} block view={'primary'}>Включить уведомления</Button>

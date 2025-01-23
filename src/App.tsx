@@ -48,7 +48,11 @@ function App() {
                 scope:'/web-push-redirect-ui/'
             }
         )
-
+            newRegistration.addEventListener('message',(message)=>{
+                console.log(message);
+                // eslint-disable-next-line no-restricted-globals
+                location.href = message.data.deeplink;
+            })
         newRegistration.register().then(()=>{
             // @ts-ignore
             window.ednaWidget.publicMethods.showAskingPopup =()=> {
@@ -71,6 +75,7 @@ function App() {
                 console.log('WEB-PUSH ERROR', error);
             });
         }).catch(error => {console.log("SW ERROE",error)})
+
     } else  {
         console.log("Service worker is not supported");
     }},[])

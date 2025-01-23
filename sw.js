@@ -7,6 +7,9 @@ async function getClientList() {
         })
     );
 }
+self.addEventListener('install', (event) => {
+    console.log('service-worker install');
+})
 
 self.addEventListener('push', function(event) {
     if (event.data) {
@@ -18,6 +21,7 @@ self.addEventListener('push', function(event) {
 self.notificationclick =null
 
 self.addEventListener('notificationclick', async function(event) {
+    console.log('Notification clicked before');
    const [client] = await getClientList()
     console.log('Notification clicked: ', event.notification.data.deeplink);
     console.log('Window',this)

@@ -59,7 +59,7 @@ export const registerWebPush = async ()=>{
             const deviceUid = window.ednaWidget.publicMethods.getDeviceUid();
             console.log('SUCCESS REGISTRATION EDNA', deviceAddress, deviceUid);
             // eslint-disable-next-line no-restricted-globals
-            location.href = 'tg://'
+            location.href = 'kittycash://'
         },
     );
     window.ednaWidget.Emitter.subscribe('onError', (error) => {

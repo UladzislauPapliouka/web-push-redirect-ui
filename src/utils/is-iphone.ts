@@ -1,0 +1,1 @@
+export const isIPhone = () => window.navigator.userAgent.includes("iPhone")

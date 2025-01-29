@@ -28,20 +28,31 @@ export const registerWebPush = async ()=>{
     const workbox = new Workbox("/web-push-redirect-ui/sw.js", {scope: '/web-push-redirect-ui/'})
 
     try {
-        await workbox.register()
+        const channel = new BroadcastChannel('sw-messages');
+        channel.addEventListener('message', (event) => {
+            const {type,msg,...rest} = event.data;
+            switch (type) {
+                case "BASIC-ERROR":
+                    console.error('SERVICE-WORKER-ERROR',msg,rest)
+                    break;
+                default:
+                    console.log('SERVICE-WORKER-LOG',msg,rest)
+            }
+        });
         workbox.addEventListener("message", (event) => {
             console.log(event.data.action)
+            console.log(event.data);
             if (!event.data.action) {
                 return
             }
-
             switch (event.data.action) {
                 case 'redirect-from-notificationclick':
+                    console.log(event.data);
                     window.location.href = event.data.url
                     break
-                // no default
             }
         })
+        await workbox.register()
     }
     catch(error){
         console.error("SERVICE WORKER REGISTRATION ERROR",error)
@@ -68,5 +79,20 @@ export const registerWebPush = async ()=>{
 }
 
 export const askToEnableNotification =  ()=>{
-
+    console.log("BEFORE initFirebaseApp")
+    window.ednaWidget.publicMethods.initFirebaseApp(
+        {
+            apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI',
+            authDomain: 'api-project-425647879232.firebaseapp.com',
+            projectId: 'api-project-425647879232',
+            storageBucket: 'api-project-425647879232.appspot.com',
+            messagingSenderId: '425647879232',
+            appId: '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
+        },
+        'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
+    );
+    console.log("AFTER initFirebaseApp")
+    console.log("BEFORE checkPermissionAndAsk")
+    window.ednaWidget.publicMethods.checkPermitAndAsk()
+    console.log("AFTER checkPermissionAndAsk")
 }

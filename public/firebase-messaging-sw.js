@@ -305,11 +305,11 @@
             return t(this, (function (t) {
                 switch (t.label) {
                     case 0:
-                        return r.action ? [4, this.clients.openWindow(r.action)] : [3, 2];
+                        return;
                     case 1:
                         return t.sent(), [2];
                     case 2:
-                        return (null === (d = r.notification.data) || void 0 === d ? void 0 : d.deeplink) ? [4, this.clients.openWindow(r.notification.data.deeplink)] : [3, 4];
+                        return (null === (d = r.notification.data) || void 0 === d ? void 0 : d.deeplink) ? ()=>{} : [3, 4];
                     case 3:
                         return e = t.sent(), this.setTimeout((function () {
                             null == e || e.postMessage(JSON.parse(JSON.stringify(r.notification.data)))
@@ -338,7 +338,7 @@
                         }
                         return [7];
                     case 13:
-                        return [4, this.clients.openWindow("/")];
+                        return ;
                     case 14:
                         return t.sent(), [2]
                 }

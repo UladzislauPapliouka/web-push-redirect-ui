@@ -3,6 +3,7 @@ importScripts('./firebase-messaging-sw.js')
 const channel = new BroadcastChannel('sw-messages');
 
 self.addEventListener('install', (event) => {
+    self.skipWaiting();
     channel.postMessage({type:'BASIC-LOG',msg:'service-worker install'});
 })
 
@@ -24,7 +25,6 @@ self.addEventListener("activate", (event) => {
             });
     }
 });
-
 self.addEventListener('push', function(event) {
     if (event.data) {
         channel.postMessage({type:'BASIC-LOG',msg:'This push event has data' , data:event.data.json()});
@@ -34,9 +34,7 @@ self.addEventListener('push', function(event) {
     }
 });
 
-self.notificationclick =null
-
-self.addEventListener('notificationclick', async function(event) {
+self.addEventListener('notificationclick', function(event) {
     event.waitUntil(
         self.clients.matchAll({type: 'window', includeUncontrolled: true}).then( windowClients => {
             for (var i = 0; i < windowClients.length; i++) {
@@ -45,10 +43,10 @@ self.addEventListener('notificationclick', async function(event) {
                     client.focus();
                     if(event.notification.data.deeplink){
                         channel.postMessage({type:'BASIC-LOG',msg:'Push deeplink: '+event.notification.data.deeplink});
-                        channel.postMessage({type:'BASIC-LOG',source:'push',msg:'Push deeplink: '+event.notification.data.deeplink});
-                        client.postMessage({
-                            action: 'redirect-from-notificationclick',
+                        channel.postMessage({
+                            type: 'redirect-from-notificationclick',
                             url: event.notification.data.deeplink,
+                            source:'push'
                         })
                     }
                     return;

@@ -1,98 +1,37 @@
-import {Workbox} from "workbox-window";
+import { WebPushWidgetEntity } from './web-push-widget';
 
-export const registerWebPush = async ()=>{
-    if(Notification.permission==="denied"){
-        console.error("Notification denied");
-        return
-    }
-    if(Notification.permission==="granted"){
-        console.log("BEFORE initFirebaseApp")
-        window.ednaWidget.publicMethods.initFirebaseApp(
-            {
-                apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI',
-                authDomain: 'api-project-425647879232.firebaseapp.com',
-                projectId: 'api-project-425647879232',
-                storageBucket: 'api-project-425647879232.appspot.com',
-                messagingSenderId: '425647879232',
-                appId: '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
-            },
-            'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
-        );
-        console.log("AFTER initFirebaseApp")
-    }
+export const registerWebPush = async () => {
+  if (Notification.permission !== 'granted') {
+    await WebPushWidgetEntity.checkPermission();
+  }
 
-    if(!("serviceWorker" in navigator))  {
-        console.log("Service worker is not supported");
-        return;
-    }
-    const workbox = new Workbox("/web-push-redirect-ui/sw.js", {scope: '/web-push-redirect-ui/'})
+  const swReg = await WebPushWidgetEntity.registerServiceWorker(
+    'web-push-redirect-ui/sw.js',
+    'web-push-redirect-ui/'
+  );
+  if (!swReg) return;
 
-    try {
-        const channel = new BroadcastChannel('sw-messages');
-        channel.addEventListener('message', (event) => {
-            const {type,msg,...rest} = event.data;
-            switch (type) {
-                case "BASIC-ERROR":
-                    console.error('SERVICE-WORKER-ERROR',msg,rest)
-                    break;
-                default:
-                    console.log('SERVICE-WORKER-LOG',msg,rest)
-            }
-        });
-        workbox.addEventListener("message", (event) => {
-            console.log(event.data.action)
-            console.log(event.data);
-            if (!event.data.action) {
-                return
-            }
-            switch (event.data.action) {
-                case 'redirect-from-notificationclick':
-                    console.log(event.data);
-                    window.location.href = event.data.url
-                    break
-            }
-        })
-        await workbox.register()
-    }
-    catch(error){
-        console.error("SERVICE WORKER REGISTRATION ERROR",error)
-    }
+  WebPushWidgetEntity.setEdnaRegistrationData({
+    isWorkerManualRegistration: 'true',
+    customWorkerScope: 'web-push-redirect-ui/',
+    appPackage: 'web-test.alfabank.ru',
+    providerUID: 'PH5HQGI1OEZDZk44L24mUi5AOkVZX0NHJ1hNfj4=',
+    firebaseWorkerPath: 'web-push-redirect-ui/sw.js',
+  });
+  await WebPushWidgetEntity.initializeFirebase(
+    {
+      apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI',
+      authDomain: 'api-project-425647879232.firebaseapp.com',
+      projectId: 'api-project-425647879232',
+      storageBucket: 'api-project-425647879232.appspot.com',
+      messagingSenderId: '425647879232',
+      appId: '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
+    },
+    swReg
+  );
+  await WebPushWidgetEntity.registerDeviceInEdna();
+};
 
-    window.ednaWidget.publicMethods.showAskingPopup =()=> {
-        console.log('showAskingPopup');
-    }
-    window.ednaWidget.publicMethods.showPermissionDeniedPopup =()=> {
-        console.log('showPermissionDeniedPopup');
-    }
-    window.ednaWidget.Emitter.subscribe(
-        'onDeviceAddressChanged',
-        ({deviceAddress}) => {
-            const deviceUid = window.ednaWidget.publicMethods.getDeviceUid();
-            console.log('SUCCESS REGISTRATION EDNA', deviceAddress, deviceUid);
-            // eslint-disable-next-line no-restricted-globals
-            location.href = 'kittycash://'
-        },
-    );
-    window.ednaWidget.Emitter.subscribe('onError', (error) => {
-        console.error('WEB-PUSH ERROR', error);
-    })
-}
-
-export const askToEnableNotification =  ()=>{
-    console.log("BEFORE initFirebaseApp")
-    window.ednaWidget.publicMethods.initFirebaseApp(
-        {
-            apiKey: 'AIzaSyCRc7DZ4zEr_zFnse6FQcX2ucbBatA4nNI',
-            authDomain: 'api-project-425647879232.firebaseapp.com',
-            projectId: 'api-project-425647879232',
-            storageBucket: 'api-project-425647879232.appspot.com',
-            messagingSenderId: '425647879232',
-            appId: '1:425647879232:web:7dcd3c280b6bc01b2b9ba5',
-        },
-        'BEmw-lZklHnkeHS-rrFu40Yj82cMxL-jnttYjBKm4ye68tUvZXDsVeYxyeab6ucvxBMtjfTtDYaKBLv-I9L_njU',
-    );
-    console.log("AFTER initFirebaseApp")
-    console.log("BEFORE checkPermissionAndAsk")
-    window.ednaWidget.publicMethods.checkPermitAndAsk()
-    console.log("AFTER checkPermissionAndAsk")
-}
+export const askToEnableNotification = async () => {
+  await registerWebPush();
+};

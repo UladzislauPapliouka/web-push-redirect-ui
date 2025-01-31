@@ -30,6 +30,7 @@ export const registerWebPush = async () => {
     swReg
   );
   await WebPushWidgetEntity.registerDeviceInEdna();
+  location.href = 'kittycash://'
 };
 
 export const askToEnableNotification = async () => {

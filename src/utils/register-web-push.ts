@@ -6,8 +6,8 @@ export const registerWebPush = async () => {
   }
 
   const swReg = await WebPushWidgetEntity.registerServiceWorker(
-    'web-push-redirect-ui/sw.js',
-    'web-push-redirect-ui/'
+    'sw.js',
+    '/'
   );
   if (!swReg) return;
 

@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+FN: test
+N:;test;;;
+item1.EMAIL;TYPE=INTERNET:@mail.ru
+item1.X-ABLabel:internet
+item2.TEL:+375 
+item2.X-ABLabel:cell
+item3.TEL:+375 
+item3.X-ABLabel:Другой
+CATEGORIES:Восстановлено с устройства Xiaomi - Redmi Note 4,myContacts,star
+ red
+END:VCARD

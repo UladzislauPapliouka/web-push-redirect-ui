@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Ваш Альфа-Банк
+N:;Ваш Альфа-Банк;;;
+TEL;TYPE=CELL:+7 999 999 99 90
+ORG:Альфа-Банк
+CATEGORIES:myContacts
+END:VCARD
